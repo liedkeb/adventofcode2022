@@ -26,12 +26,22 @@ public class Day10 {
             long cycle = 1;
             long signalStrength = 0L;
             String prevWord = "";
+            StringBuffer buffer = new StringBuffer();
             while ((line = reader.readLine()) != null) {
                 String[] words = line.split(" ");
                 for (String word : words) {
                     if ((cycle - 20) % 40 == 0) {
                         signalStrength += cycle * register;
                         System.out.println(register + " " + cycle * register);
+                    }
+                    long linePosition = (cycle - 1L) % 40;
+                    if (linePosition == 0) {
+                        buffer.append("\n");
+                    }
+                    if (register + 1 >= linePosition && register - 1 <= linePosition) {
+                        buffer.append("#");
+                    } else {
+                        buffer.append(".");
                     }
 
                     if (prevWord.equals("addx")) {
@@ -44,6 +54,7 @@ public class Day10 {
             }
             // print
             System.out.println("signal strength: " + signalStrength);
+            System.out.println(buffer);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
